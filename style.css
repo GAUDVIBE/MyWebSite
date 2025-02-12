@@ -1,0 +1,32 @@
+body {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    color: #000;
+}
+
+.pdf-button {
+    padding: 10px 20px;
+    background-color: #001;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.pdf-button:hover {
+    background-color: #fff;
+}
+
+.github-link {
+    color: #0073e6;
+    text-decoration: none;
+    font-size: 18px;
+    margin-top: 20px;
+    display: inline-block;
+}
+
+.message {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #333;
+}
