@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 
 #include "character-manager.h"
 
@@ -48,17 +49,17 @@ int main() {
         //printCharacter(&characters[i]); // Pass the address of each character
         printf("%d : %s\n", i, getCharacterName(&characters[i]));
     } 
-    int raw;
+    int characterRaw;
     
     //disableEcho();
-    scanf("%d", &raw);
+    scanf("%d", &characterRaw);
     //enableEcho();
-    printf("You choose ID : %d.\n", raw);
+    printf("You choose ID : %d.\n", characterRaw);
     // Access specific fields of the first character
-    if (characters_count > raw && raw >= 0) {
-        int health = getCharacterFieldByName(&characters[raw], "health");
-        int mana = getCharacterFieldByName(&characters[raw], "mana");
-        const char *name = getCharacterName(&characters[raw]);
+    if (characters_count > characterRaw && characterRaw >= 0) {
+        int health = getCharacterFieldByName(&characters[characterRaw], "health");
+        int mana = getCharacterFieldByName(&characters[characterRaw], "mana");
+        const char *name = getCharacterName(&characters[characterRaw]);
   
         // Print the character retrieved values
         printf("\nDetails of the character:\n");
@@ -68,15 +69,15 @@ int main() {
     }
 
     // Random opponent
-    int y = RandomNumb(12);
-    const char *opponent = getOpponentName(&enemies[y]);
+    int enemieRaw = RandomNumb(12);
+    const char *opponent = getOpponentName(&enemies[enemieRaw]);
     printf("\nYour enemy is : %s\n", opponent);
 
     // Access specific fields of the first character
-    if (enemy_count > y && y >= 0) {
-        int health = getOpponentFieldByName(&enemies[y], "health");
-        int mana = getOpponentFieldByName(&enemies[y], "mana");
-        const char *name = getOpponentName(&enemies[y]);
+    if (enemy_count > enemieRaw && enemieRaw >= 0) {
+        int health = getOpponentFieldByName(&enemies[enemieRaw], "health");
+        int mana = getOpponentFieldByName(&enemies[enemieRaw], "mana");
+        const char *name = getOpponentName(&enemies[enemieRaw]);
   
         // Print the enemy retrieved values
         printf("\nDetails of the enemy:\n");
@@ -85,43 +86,73 @@ int main() {
         printf("No characters loaded.\n");
     }
     
+    
+    
     //--------------------------------FIGHT LOOP
 
-    while (isCharacterAlive(&characters[raw]) && isEnemyAlive(&enemies[y])) {
-        printf("%s's turn!\n", getCharacterName(&characters[raw]));
-        attackCharacter(&characters[raw], &enemies[y]);
-        
-        if (!isEnemyAlive(&enemies[y])) {
-            printf("%s has been defeated!\n", getOpponentName(&enemies[y]));
-            break;
+   
+
+    // Determine who goes first based on initiative
+    printf("yo\n");
+    bool characterFirst = isCharacterFirst(&characters[characterRaw], &enemies[enemieRaw]);
+    
+    while (isCharacterAlive(&characters[characterRaw]) && isEnemyAlive(&enemies[enemieRaw])) {
+        if (characterFirst) {
+            // Character's turn
+            printf("%s's turn!\n", getCharacterName(&characters[characterRaw]));
+            attackCharacter(&characters[characterRaw], &enemies[enemieRaw]);
+    
+            // Check if the enemy is defeated
+            if (!isEnemyAlive(&enemies[enemieRaw])) {
+                printf("%s has been defeated!\n", getOpponentName(&enemies[enemieRaw]));
+                break;
+            }
+    
+            // Enemy's turn
+            printf("%s's turn!\n", getOpponentName(&enemies[enemieRaw]));
+            attackEnemy(&enemies[enemieRaw], &characters[characterRaw]);
+    
+            // Check if the character is defeated
+            if (!isCharacterAlive(&characters[characterRaw])) {
+                printf("%s has been defeated!\n", getCharacterName(&characters[characterRaw]));
+                break;
+            }
+            } else {
+            // Enemy's turn
+            printf("%s's turn!\n", getOpponentName(&enemies[enemieRaw]));
+            attackEnemy(&enemies[enemieRaw], &characters[characterRaw]);
+    
+            // Check if the character is defeated
+            if (!isCharacterAlive(&characters[characterRaw])) {
+                printf("%s has been defeated!\n", getCharacterName(&characters[characterRaw]));
+                break;
+            }
+    
+            // Character's turn
+            printf("%s's turn!\n", getCharacterName(&characters[characterRaw]));
+            attackCharacter(&characters[characterRaw], &enemies[enemieRaw]);
+    
+            // Check if the enemy is defeated
+            if (!isEnemyAlive(&enemies[enemieRaw])) {
+                printf("%s has been defeated!\n", getOpponentName(&enemies[enemieRaw]));
+                break;
+            }
         }
-
-    printf("%s's turn!\n", getOpponentName(&enemies[y]));
-        attackEnemy(&enemies[y], &characters[raw]);
-        
-        if (!isCharacterAlive(&characters[raw])) {
-            printf("%s has been defeated!\n", getCharacterName(&characters[raw]));
-            break;
-        }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    }
 
 
 
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+

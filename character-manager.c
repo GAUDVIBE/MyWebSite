@@ -234,6 +234,17 @@ int isEnemyAlive(EnemiesStruct *enemy) {
     return enemy->health > 0;
 }
 
+// Determine who goes first based on speed
+int isCharacterFirst(CharacterStruct* character, EnemiesStruct* enemy) {
+    if (character->speed > enemy->speed) {
+        return 1;
+    } else if (enemy->speed > character->speed) {
+        return 0;
+    } else {
+        // If speeds are equal, randomly decide who goes first
+        return (rand() % 2 == 0);
+    }
+}
 
 
 

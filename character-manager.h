@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 #include <time.h>
 #include <termios.h>
@@ -74,6 +75,7 @@ void attackCharacter(CharacterStruct *attacker, EnemiesStruct *defender);
 void attackEnemy(EnemiesStruct *attacker, CharacterStruct *defender);
 int isCharacterAlive(CharacterStruct *character);
 int isEnemyAlive(EnemiesStruct *enemy);
+int isCharacterFirst(CharacterStruct* character, EnemiesStruct* enemy);
 int RandomNumb(int numb_max);
 void disableEcho();
 void enableEcho(); 
