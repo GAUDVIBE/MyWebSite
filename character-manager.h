@@ -76,6 +76,8 @@ void attackEnemy(EnemiesStruct *attacker, CharacterStruct *defender);
 int isCharacterAlive(CharacterStruct *character);
 int isEnemyAlive(EnemiesStruct *enemy);
 int isCharacterFirst(CharacterStruct* character, EnemiesStruct* enemy);
+void FightLoop(CharacterStruct* character, EnemiesStruct* enemy);
+
 int RandomNumb(int numb_max);
 void disableEcho();
 void enableEcho(); 

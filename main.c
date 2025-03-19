@@ -89,57 +89,9 @@ int main() {
     
     
     //--------------------------------FIGHT LOOP
-
+    FightLoop(&characters[characterRaw], &enemies[enemieRaw]);
    
-
-    // Determine who goes first based on initiative
-    bool characterFirst = isCharacterFirst(&characters[characterRaw], &enemies[enemieRaw]);
-    
-    while (isCharacterAlive(&characters[characterRaw]) && isEnemyAlive(&enemies[enemieRaw])) {
-        if (characterFirst) {
-            // Character's turn
-            printf("%s's turn!\n", getCharacterName(&characters[characterRaw]));
-            attackCharacter(&characters[characterRaw], &enemies[enemieRaw]);
-    
-            // Check if the enemy is defeated
-            if (!isEnemyAlive(&enemies[enemieRaw])) {
-                printf("%s has been defeated!\n", getOpponentName(&enemies[enemieRaw]));
-                break;
-            }
-    
-            // Enemy's turn
-            printf("%s's turn!\n", getOpponentName(&enemies[enemieRaw]));
-            attackEnemy(&enemies[enemieRaw], &characters[characterRaw]);
-    
-            // Check if the character is defeated
-            if (!isCharacterAlive(&characters[characterRaw])) {
-                printf("%s has been defeated!\n", getCharacterName(&characters[characterRaw]));
-                break;
-            }
-            } else {
-            // Enemy's turn
-            printf("%s's turn!\n", getOpponentName(&enemies[enemieRaw]));
-            attackEnemy(&enemies[enemieRaw], &characters[characterRaw]);
-    
-            // Check if the character is defeated
-            if (!isCharacterAlive(&characters[characterRaw])) {
-                printf("%s has been defeated!\n", getCharacterName(&characters[characterRaw]));
-                break;
-            }
-    
-            // Character's turn
-            printf("%s's turn!\n", getCharacterName(&characters[characterRaw]));
-            attackCharacter(&characters[characterRaw], &enemies[enemieRaw]);
-    
-            // Check if the enemy is defeated
-            if (!isEnemyAlive(&enemies[enemieRaw])) {
-                printf("%s has been defeated!\n", getOpponentName(&enemies[enemieRaw]));
-                break;
-            }
-        }
-    }
-
-
+   
 
     return 0;
 }

@@ -248,6 +248,54 @@ int isCharacterFirst(CharacterStruct* character, EnemiesStruct* enemy) {
 
 
 
+ void FightLoop(CharacterStruct* character, EnemiesStruct* enemy){
+        // Determine who goes first based on initiative
+        bool characterFirst = isCharacterFirst(character, enemy);
+        
+        while (isCharacterAlive(character) && isEnemyAlive(enemy)) {
+            if (characterFirst) {
+                // Character's turn
+                printf("%s's turn!\n", getCharacterName(character));
+                attackCharacter(character, enemy);
+        
+                // Check if the enemy is defeated
+                if (!isEnemyAlive(enemy)) {
+                    printf("%s has been defeated!\n", getOpponentName(enemy));
+                    break;
+                }
+        
+                // Enemy's turn
+                printf("%s's turn!\n", getOpponentName(enemy));
+                attackEnemy(enemy, character);
+        
+                // Check if the character is defeated
+                if (!isCharacterAlive(character)) {
+                    printf("%s has been defeated!\n", getCharacterName(character));
+                    break;
+                }
+                } else {
+                // Enemy's turn
+                printf("%s's turn!\n", getOpponentName(enemy));
+                attackEnemy(enemy, character);
+        
+                // Check if the character is defeated
+                if (!isCharacterAlive(character)) {
+                    printf("%s has been defeated!\n", getCharacterName(character));
+                    break;
+                }
+        
+                // Character's turn
+                printf("%s's turn!\n", getCharacterName(character));
+                attackCharacter(character, enemy);
+        
+                // Check if the enemy is defeated
+                if (!isEnemyAlive(enemy)) {
+                    printf("%s has been defeated!\n", getOpponentName(enemy));
+                    break;
+                }
+            }
+        }
+    }
 
 
 
