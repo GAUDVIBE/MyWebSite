@@ -93,7 +93,6 @@ int main() {
    
 
     // Determine who goes first based on initiative
-    printf("yo\n");
     bool characterFirst = isCharacterFirst(&characters[characterRaw], &enemies[enemieRaw]);
     
     while (isCharacterAlive(&characters[characterRaw]) && isEnemyAlive(&enemies[enemieRaw])) {
