@@ -103,6 +103,16 @@ void parse_boss(char *line, void *data) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 //-----------------------------------------------Print
 
 void displayCharacter(const char *title, void *characters, int count, size_t size, void (*printFunc)(void *)) {
@@ -134,6 +144,17 @@ void printBoss(void *boss) {
     printf("ID: %d, Name: %s, Health: %d, Mana: %d, Strength: %d, Intelligence: %d, Defense: %d, Resistance: %d, Speed: %d, Luck: %d, Rarity: %d\n",
            b->id, b->name, b->health, b->mana, b->strength, b->intelligence, b->defense, b->resistance, b->speed, b->luck, b->rarity);
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -210,7 +231,13 @@ const char *getOpponentName(const EnemiesStruct *enemy) {
 
 
 
-//--------------------------------------Fight Loop
+
+
+
+
+
+
+//--------------------------------------Fight Loop function call
 
 // Function to simulate an attack
 void attackCharacter(CharacterStruct *attacker, EnemiesStruct *defender) {
@@ -247,55 +274,56 @@ int isCharacterFirst(CharacterStruct* character, EnemiesStruct* enemy) {
 }
 
 
+//-------------------------------------FIGHT LOOP
 
- void FightLoop(CharacterStruct* character, EnemiesStruct* enemy){
-        // Determine who goes first based on initiative
-        bool characterFirst = isCharacterFirst(character, enemy);
+void FightLoop(CharacterStruct* character, EnemiesStruct* enemy){
+    // Determine who goes first based on initiative
+    bool characterFirst = isCharacterFirst(character, enemy);
         
-        while (isCharacterAlive(character) && isEnemyAlive(enemy)) {
-            if (characterFirst) {
-                // Character's turn
-                printf("%s's turn!\n", getCharacterName(character));
-                attackCharacter(character, enemy);
+    while (isCharacterAlive(character) && isEnemyAlive(enemy)) {
+        if (characterFirst) {
+            // Character's turn
+            printf("%s's turn!\n", getCharacterName(character));
+            attackCharacter(character, enemy);
         
-                // Check if the enemy is defeated
-                if (!isEnemyAlive(enemy)) {
-                    printf("%s has been defeated!\n", getOpponentName(enemy));
-                    break;
-                }
+            // Check if the enemy is defeated
+            if (!isEnemyAlive(enemy)) {
+                printf("%s has been defeated!\n", getOpponentName(enemy));
+                break;
+            }
         
-                // Enemy's turn
-                printf("%s's turn!\n", getOpponentName(enemy));
-                attackEnemy(enemy, character);
+            // Enemy's turn
+            printf("%s's turn!\n", getOpponentName(enemy));
+            attackEnemy(enemy, character);
         
-                // Check if the character is defeated
-                if (!isCharacterAlive(character)) {
-                    printf("%s has been defeated!\n", getCharacterName(character));
-                    break;
-                }
-                } else {
-                // Enemy's turn
-                printf("%s's turn!\n", getOpponentName(enemy));
-                attackEnemy(enemy, character);
+            // Check if the character is defeated
+            if (!isCharacterAlive(character)) {
+                printf("%s has been defeated!\n", getCharacterName(character));
+                break;
+            }
+            } else {
+            // Enemy's turn
+            printf("%s's turn!\n", getOpponentName(enemy));
+            attackEnemy(enemy, character);
         
-                // Check if the character is defeated
-                if (!isCharacterAlive(character)) {
-                    printf("%s has been defeated!\n", getCharacterName(character));
-                    break;
-                }
+            // Check if the character is defeated
+            if (!isCharacterAlive(character)) {
+                printf("%s has been defeated!\n", getCharacterName(character));
+                break;
+            }
         
-                // Character's turn
-                printf("%s's turn!\n", getCharacterName(character));
-                attackCharacter(character, enemy);
+            // Character's turn
+            printf("%s's turn!\n", getCharacterName(character));
+            attackCharacter(character, enemy);
         
-                // Check if the enemy is defeated
-                if (!isEnemyAlive(enemy)) {
-                    printf("%s has been defeated!\n", getOpponentName(enemy));
-                    break;
-                }
+            // Check if the enemy is defeated
+            if (!isEnemyAlive(enemy)) {
+                printf("%s has been defeated!\n", getOpponentName(enemy));
+                break;
             }
         }
     }
+}
 
 
 

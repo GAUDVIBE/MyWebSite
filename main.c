@@ -73,13 +73,13 @@ int main() {
     const char *opponent = getOpponentName(&enemies[enemieRaw]);
     printf("\nYour enemy is : %s\n", opponent);
 
-    // Access specific fields of the first character
+    // Access specific fields of the first enemie
     if (enemy_count > enemieRaw && enemieRaw >= 0) {
         int health = getOpponentFieldByName(&enemies[enemieRaw], "health");
         int mana = getOpponentFieldByName(&enemies[enemieRaw], "mana");
         const char *name = getOpponentName(&enemies[enemieRaw]);
   
-        // Print the enemy retrieved values
+        // Print the enemie retrieved values
         printf("\nDetails of the enemy:\n");
         printf("Name: %s, Health: %d, Mana: %d\n", name, health, mana); //adapt for enemy struct
     } else {
@@ -89,6 +89,7 @@ int main() {
     
     
     //--------------------------------FIGHT LOOP
+
     FightLoop(&characters[characterRaw], &enemies[enemieRaw]);
    
    
