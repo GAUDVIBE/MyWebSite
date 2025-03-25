@@ -100,6 +100,28 @@ void parse_boss(char *line, void *data) {
     }
 }
 
+void parse_spell(char *line,void *data) {
+    SpellsStruct *spell = (SpellsStruct *)data;
+    char *token = strtok(line, ",");
+
+    if (token) spell->id = atoi(token);
+
+    token = strtok(NULL, ",");
+    if (token) strncpy(spell->name, token, MAX_NAME_LEN - 1);
+    spell->name[MAX_NAME_LEN - 1] = '\0';
+
+    int *fields[] = {
+        &spell->cost, &spell->dmg, &spell->effect, &spell->cooldown, 
+        &spell->race, &spell->race, &spell->rarity
+    };
+
+    for (int i = 0; i < sizeof(fields) / sizeof(fields[0]); i++) {
+        token = strtok(NULL, ",");
+        if (token == NULL) break;
+        *fields[i] = atoi(token);
+    }
+}
+
 
 
 
@@ -115,7 +137,7 @@ void parse_boss(char *line, void *data) {
 
 //-----------------------------------------------Print
 
-void displayCharacter(const char *title, void *characters, int count, size_t size, void (*printFunc)(void *)) {
+void displayCSV(const char *title, void *characters, int count, size_t size, void (*printFunc)(void *)) {
     if (count > 0) {
         printf("\n - %s -\n", title);
         for (int i = 0; i < count; i++) {
@@ -145,7 +167,11 @@ void printBoss(void *boss) {
            b->id, b->name, b->health, b->mana, b->strength, b->intelligence, b->defense, b->resistance, b->speed, b->luck, b->rarity);
 }
 
-
+void printSpell(void *spell) {
+    SpellsStruct *c = (SpellsStruct *)spell;
+    printf("ID: %d, Name: %s, Cost: %d, Dmg: %d, Effect: %d, Cooldown: %d, Race: %d, Rarity: %d\n",
+           c->id, c->name, c->cost, c->dmg, c->effect, c->cooldown, c->race, c->rarity);
+}
 
 
 
@@ -216,6 +242,28 @@ int getCharacterFieldByName(const CharacterStruct *character, const char *fieldN
     }
 }
 
+// Getter function for SpellsStruct fields using field names
+int getSpellFieldByName(const SpellsStruct *spell, const char *fieldName) {;
+    if (strcmp(fieldName, "id") == 0) {
+        return spell->id;
+    } else if (strcmp(fieldName, "cost") == 0) {
+        return spell->cost;
+    } else if (strcmp(fieldName, "dmg") == 0) {
+        return spell->dmg;
+    } else if (strcmp(fieldName, "effect") == 0) {
+        return spell->effect;
+    } else if (strcmp(fieldName, "cooldown") == 0) {
+        return spell->cooldown;
+    } else if (strcmp(fieldName, "race") == 0) {
+        return spell->race;
+    } else if (strcmp(fieldName, "rarity") == 0) {
+        return spell->rarity;
+    } else {
+        fprintf(stderr, "Invalid field name: %s\n", fieldName);
+        return -1; // Indicate an error
+    }
+}
+
 // Getter function for the name field (returns a string)
 const char *getCharacterName(const CharacterStruct *character) {
     return character->name;
@@ -225,6 +273,9 @@ const char *getOpponentName(const EnemiesStruct *enemy) {
     return enemy->name;
 }
 
+const char *getSpellName(const SpellsStruct *spell) {
+    return spell->name;
+}
 
 
 
@@ -272,6 +323,60 @@ int isCharacterFirst(CharacterStruct* character, EnemiesStruct* enemy) {
         return (rand() % 2 == 0);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+//-------------------------------------Spells func
+
+ int ChooseSpell(SpellsStruct *spells, int count) {
+        // Check if the CSV was structured successfully
+        if (count < 0) {
+        fprintf(stderr, "[spell_count]Error reading CSV file .\n");
+        return 1;
+        }
+
+        printf("Choose a spell :\n");
+        for (int i = 0; i < count; i++) {
+            printf("%d : %s\n", i, getSpellName(&spells[i]));
+        } 
+        int spellRaw;
+        
+        //disableEcho();
+        scanf("%d", &spellRaw);
+        //enableEcho();
+        printf("You have enter: %d.\n", spellRaw);
+        // Access specific fields of the first character
+        if (count > spellRaw && spellRaw >= 0) {
+            int cost = getSpellFieldByName(&spells[spellRaw], "cost");
+            int dmg = getSpellFieldByName(&spells[spellRaw], "dmg");
+            const char *name = getSpellName(&spells[spellRaw]);
+    
+            // Print the character retrieved values
+            printf("\nDetails of the spell:\n");
+            printf("%s: cost: %d, dmg: %d\n", name, cost, dmg);
+        } else {
+        printf("No characters loaded.\n");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
 //-------------------------------------FIGHT LOOP
@@ -364,3 +469,4 @@ int RandomNumb(int numb_max) {
     srand(time(NULL));
     return 1+rand()%numb_max;
 }
+
