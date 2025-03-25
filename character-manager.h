@@ -1,3 +1,4 @@
+
 #ifndef CHARACTER_MANAGER_H_
 #define CHARACTER_MANAGER_H_
 
