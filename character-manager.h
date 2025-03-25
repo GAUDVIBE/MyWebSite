@@ -58,19 +58,38 @@ typedef struct BossesStruct {
     int rarity;
 } BossesStruct;
 
+// Structure for Spells
+typedef struct SpellsStruct {
+    int id;
+    char name [MAX_NAME_LEN];
+    int cost;
+    int dmg;
+    int effect;
+    int cooldown;
+    int race;
+    int rarity;
+} SpellsStruct;
+
 // Function Prototypes
 int read_csv_generic(const char *filename, void *data, int max_items, size_t struct_size, void (*parser)(char *, void *));
 void parse_character(char *line, void *data);
 void parse_enemy(char *line, void *data);
 void parse_boss(char *line, void *data);
-void displayCharacter(const char *title, void *characters, int count, size_t size, void (*printFunc)(void *));
+void parse_spell(char *line, void *data);
+
+void displayCSV(const char *title, void *characters, int count, size_t size, void (*printFunc)(void *));
 void printCharacter(void *character);
 void printEnemy(void *enemy);
 void printBoss(void *boss);
+void printSpell(void *spell);
+
 int getCharacterFieldByName(const CharacterStruct *character, const char *fieldName);
 int getOpponentFieldByName(const EnemiesStruct *enemy, const char *fieldName);
+int getSpellFieldByName(const SpellsStruct *character, const char *fieldName);
 const char *getCharacterName(const CharacterStruct *character);
 const char *getOpponentName(const EnemiesStruct *enemy);
+const char *getSpellName(const SpellsStruct *spell);
+
 void attackCharacter(CharacterStruct *attacker, EnemiesStruct *defender);
 void attackEnemy(EnemiesStruct *attacker, CharacterStruct *defender);
 int isCharacterAlive(CharacterStruct *character);
