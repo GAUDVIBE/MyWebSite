@@ -95,7 +95,16 @@ void attackEnemy(EnemiesStruct *attacker, CharacterStruct *defender);
 int isCharacterAlive(CharacterStruct *character);
 int isEnemyAlive(EnemiesStruct *enemy);
 int isCharacterFirst(CharacterStruct* character, EnemiesStruct* enemy);
-void FightLoop(CharacterStruct* character, EnemiesStruct* enemy);
+void applyDamageToEnemy(EnemiesStruct* enemy, int damage);
+
+int ChooseSpell(SpellsStruct *spells, int count, CharacterStruct* character);
+void castSpell(CharacterStruct* caster, EnemiesStruct* target, SpellsStruct* spell);
+int getCharacterMana(CharacterStruct* character);
+void setCharacterMana(CharacterStruct* character, int newMP);
+
+void FightLoop(CharacterStruct* character, EnemiesStruct* enemy, SpellsStruct* spells, int spellCount);
+void performCharacterTurn(CharacterStruct* character, EnemiesStruct* enemy);
+void performEnemyTurn(EnemiesStruct* enemy, CharacterStruct* character);
 
 int RandomNumb(int numb_max);
 void disableEcho();
