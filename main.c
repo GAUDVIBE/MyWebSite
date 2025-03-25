@@ -8,34 +8,38 @@
 const char *PLAYERS_FILE_PATH = "./game_data/players.csv"; 
 const char *ENEMIES_FILE_PATH = "./game_data/enemies.csv"; 
 const char *BOSSES_FILE_PATH = "./game_data/bosses.csv";
+const char *SPELLS_FILE_PATH = "./game_data/spells.csv";
 
 int main() {
 
     /*
     CharacterStruct characters[MAX_CHARACTERS];
     int characters_count = read_csv_generic(PLAYERS_FILE_PATH, characters, MAX_CHARACTERS, sizeof(CharacterStruct), parse_character);
-    displayCharacter("CSV PLAYERS", characters, characters_count, sizeof(CharacterStruct), printCharacter);
+    displayCSV("CSV PLAYERS", characters, characters_count, sizeof(CharacterStruct), printCharacter);
 
     EnemiesStruct enemies[MAX_CHARACTERS];
     int enemy_count = read_csv_generic(ENEMIES_FILE_PATH, enemies, MAX_CHARACTERS, sizeof(EnemiesStruct), parse_enemy);
-    displayCharacter("CSV ENEMIES", enemies, enemy_count, sizeof(EnemiesStruct), printEnemy);
+    displayCSV("CSV ENEMIES", enemies, enemy_count, sizeof(EnemiesStruct), printEnemy);
 
     BossesStruct bosses[MAX_CHARACTERS];
     int boss_count = read_csv_generic(BOSSES_FILE_PATH, bosses, MAX_CHARACTERS, sizeof(BossesStruct), parse_boss);
-    displayCharacter("CSV BOSSES", bosses, boss_count, sizeof(BossesStruct), printBoss);
+    displayCSV("CSV BOSSES", bosses, boss_count, sizeof(BossesStruct), printBoss);
     */
       
     
-    // Array to store characters loaded from the CSV file
+    // Array to store Structures loaded from the CSV file
     CharacterStruct characters[MAX_CHARACTERS];
     EnemiesStruct enemies[MAX_CHARACTERS];
     BossesStruct bosses[MAX_CHARACTERS];
     
-
+    SpellsStruct spells[MAX_CHARACTERS];
+    
     // Read the CSV file and parse the data
     int characters_count = read_csv_generic(PLAYERS_FILE_PATH, characters, MAX_CHARACTERS, sizeof(CharacterStruct), parse_character);
     int enemy_count = read_csv_generic(ENEMIES_FILE_PATH, enemies, MAX_CHARACTERS, sizeof(EnemiesStruct), parse_enemy);
     // int bosses_count 
+    int spell_count = read_csv_generic(SPELLS_FILE_PATH, spells, MAX_CHARACTERS, sizeof(SpellsStruct), parse_spell);
+
 
     // Check if data was loaded successfully
     if (characters_count < 0) {
@@ -89,13 +93,23 @@ int main() {
     
     
     //--------------------------------FIGHT LOOP
-
+    
     FightLoop(&characters[characterRaw], &enemies[enemieRaw]);
    
    
 
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
 
 
 
