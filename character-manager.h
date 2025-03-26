@@ -1,4 +1,3 @@
-
 #ifndef CHARACTER_MANAGER_H_
 #define CHARACTER_MANAGER_H_
 
@@ -91,6 +90,8 @@ const char *getCharacterName(const CharacterStruct *character);
 const char *getOpponentName(const EnemiesStruct *enemy);
 const char *getSpellName(const SpellsStruct *spell);
 
+void characterTurn(CharacterStruct* character, EnemiesStruct* enemy, SpellsStruct* spells, int spellCount);
+void enemyTurn(EnemiesStruct* enemy, CharacterStruct* character);
 void attackCharacter(CharacterStruct *attacker, EnemiesStruct *defender);
 void attackEnemy(EnemiesStruct *attacker, CharacterStruct *defender);
 int isCharacterAlive(CharacterStruct *character);
@@ -99,9 +100,12 @@ int isCharacterFirst(CharacterStruct* character, EnemiesStruct* enemy);
 void applyDamageToEnemy(EnemiesStruct* enemy, int damage);
 
 int ChooseSpell(SpellsStruct *spells, int count, CharacterStruct* character);
-void castSpell(CharacterStruct* caster, EnemiesStruct* target, SpellsStruct* spell);
 int getCharacterMana(CharacterStruct* character);
 void setCharacterMana(CharacterStruct* character, int newMP);
+void applySpellToCharacter(CharacterStruct* target, SpellsStruct* spell);
+void applySpellToEnemy(CharacterStruct* caster, EnemiesStruct* target, SpellsStruct* spell);
+const char* getSpellFieldText(SpellsStruct* spell, const char* field);
+
 
 void FightLoop(CharacterStruct* character, EnemiesStruct* enemy, SpellsStruct* spells, int spellCount);
 void performCharacterTurn(CharacterStruct* character, EnemiesStruct* enemy);
