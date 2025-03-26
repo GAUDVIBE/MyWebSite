@@ -10,6 +10,7 @@ const char *ENEMIES_FILE_PATH = "./game_data/enemies.csv";
 const char *BOSSES_FILE_PATH = "./game_data/bosses.csv";
 const char *SPELLS_FILE_PATH = "./game_data/spells.csv";
 
+
 int main() {
 
     /*
@@ -94,7 +95,7 @@ int main() {
     
     //--------------------------------FIGHT LOOP
     
-    FightLoop(&characters[characterRaw], &enemies[enemieRaw]);
+    FightLoop(&characters[characterRaw], &enemies[enemieRaw],spells,spell_count);
    
    
 
