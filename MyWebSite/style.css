@@ -1,0 +1,10 @@
+/* Terminal Styles */
+#terminal {
+    background-color: rgba(255,255,255,0.9);
+    color: #000;
+}
+
+.terminal-input {
+    color: #000 !important;
+    caret-color: #000 !important;
+}
