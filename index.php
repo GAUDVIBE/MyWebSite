@@ -22,14 +22,19 @@
     $TextColor = isDarkColor($randomColor) ? '#FFFFFF' : '#000000';
     $buttonColor = isDarkColor($randomColor) ? '#4a6fa5' : '#2c5e8f';
     ?>
-    <style>
-        :root {
-            --primary-color: <?= $randomColor ?>;
-            --text-color: <?= $TextColor ?>;
-            --button-color: <?= $buttonColor ?>;
-            --button-hover: <?= isDarkColor($randomColor) ? '#3a5a8a' : '#1c4e7f' ?>;
-        }
-    </style>
+<style>
+    :root {
+        --primary-color: <?= $randomColor ?>;
+        --primary-color-rgb: <?=
+            hexdec(substr($randomColor, 1, 2)) . ',' .
+            hexdec(substr($randomColor, 3, 2)) . ',' .
+            hexdec(substr($randomColor, 5, 2))
+        ?>;
+        --text-color: <?= $TextColor ?>;
+        --button-color: <?= $buttonColor ?>;
+        --button-hover: <?= isDarkColor($randomColor) ? '#3a5a8a' : '#1c4e7f' ?>;
+    }
+</style>
 </head>
 <body>
     <div class="loading">
@@ -42,11 +47,15 @@
     </canvas>
     
     <div class="content-container">
-        <header>
-            <h1>ANTOINE GAUDRY</h1>
-        </header>
-
         <main class="main-content">
+            <!-- Header Container -->
+            <div class="header-container">
+                <header>
+                    <h1>ANTOINE GAUDRY</h1>
+                </header>
+            </div>
+
+            <!-- Buttons Grid -->
             <div class="buttons-grid">
                 <button class="pdf-button" onclick="handlePdfView('CV2025.pdf')">
                     <span class="label">CV</span>
@@ -65,6 +74,7 @@
         </main>
     </div>
 
+    <!-- Rest of your JavaScript remains the same -->
     <script>
         // Gestion PDF améliorée
         function handlePdfView(pdfFile) {
