@@ -1,22 +1,27 @@
-# GAURDY's first website
+# GAURDY's Enhanced Website
+
 ## Technologies used
-- **html**: to represent content on the web page
-- **css**: to style content
-- **php**: for safe handeling of files
-- **javascript**: for dynamic handeling of the website
-- **docker compose**: for contenerisation of the web server
-## Description
-This is gaudry's first website, made to help out in his job and present himself
+- **HTML5**: For content structure
+- **CSS3**: With CSS variables for dynamic theming
+- **PHP**: For server-side processing and dynamic color generation
+- **JavaScript**: For interactive elements
+- **WebGL**: For advanced animated backgrounds
+- **Docker Compose**: For containerization
+
+## New Features
+- Dynamic color scheme that changes on each page load
+- Coordinated colors between background and content
+- Enhanced PDF viewer with toolbar
+- WebGL background with:
+  - Random shapes (circles, boxes, triangles, hexagons, lines)
+  - Distortion effects
+  - Color patterns that complement the theme
+- Loading indicator
+- Responsive design
+
 ## Setting up
-To set up the project, follow these steps
-- clone this project in your machine
+To set up the project, follow these steps:
+
+1. Clone this project in your machine
 ```console
 git clone https://github.com/GAUDVIBE/MyWebSite.git
-```
-
-- set up (docker)[https://docs.docker.com/get-started/] and (docker compose)[https://docs.docker.com/compose/] then run:
-```console
-docker compose up -d
-```
-
-- go to the exposed local adresse on port 8080 (http://localhost:8080/)[http://localhost:8080/]
