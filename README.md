@@ -20,7 +20,7 @@
 - Responsive design
 
 ## References
-- I use an existing project for the background animation, you can visit it at : https://github.com/gjtorikian/Earthbound-Battle-Backgrounds-JS/blob/gh-pages/README.md
+- I've used an existing project for the background animation, you can visit it at : https://github.com/gjtorikian/Earthbound-Battle-Backgrounds-JS/blob/gh-pages/README.md
 
 To set up the project, follow these steps:
 
