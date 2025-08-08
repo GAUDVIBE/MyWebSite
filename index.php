@@ -73,8 +73,6 @@
             <div id="messageDisplay" aria-live="polite"></div>
         </main>
     </div>
-
-    <!-- Rest of your JavaScript remains the same -->
     <script>
         // Gestion PDF améliorée
         function handlePdfView(pdfFile) {
