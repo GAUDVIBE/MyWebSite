@@ -86,7 +86,10 @@
             <div id="messageDisplay" aria-live="polite"></div>
         </main>
     </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> eedb4d63c9e3ac199d8ee3393d6b691483887fee
     <script>
         // PDF handling function
         function handlePdfView(pdfFile) {

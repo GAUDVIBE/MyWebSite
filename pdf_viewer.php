@@ -8,6 +8,6 @@ if (in_array($file, $allowedFiles) && file_exists($file)) {
     readfile($file);
     exit;
 } else {
-    die('Fichier PDF non autorisé ou introuvable');
+    die('Fichier PDF introuvable');
 }
 ?>
