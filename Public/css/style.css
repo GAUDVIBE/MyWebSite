@@ -1,0 +1,278 @@
+/* ===== CORE & VARIABLES ===== */
+:root {
+  --primary-opacity: 0.1;
+  --button-opacity: 0.7;
+  --button-hover-opacity: 0.9;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  height: 100%;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  touch-action: manipulation;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  color: var(--text-color);
+  background: var(--primary-color);
+  background-image: linear-gradient(var(--primary-color), var(--primary-color));
+}
+
+/* ===== LAYOUT & CONTAINERS ===== */
+.content-container {
+  max-width: min(1000px, 95%);
+  width: 90%;
+  margin: 0 auto;
+  padding: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.main-content {
+  position: relative;
+  background: rgba(var(--primary-color-rgb), 0.1);
+  border-radius: 24px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  border: 1px solid rgba(var(--primary-color-rgb), 0.2);
+}
+
+.main-content::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--primary-color);
+  opacity: var(--primary-opacity);
+  z-index: -1;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* ===== TYPOGRAPHY ===== */
+.portfolio-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  text-align: center;
+  color: var(--primary-color);
+  margin: 1rem auto 2rem; /* Changed to auto for horizontal centering */
+  padding: 0.5rem 1rem;
+  letter-spacing: -0.5px;
+  font-weight: 600;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  background-color: rgba(var(--primary-color-rgb), 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-radius: 12px;
+  display: block; /* Changed from inline-block to block */
+  width: fit-content; /* Allows container to shrink to content */
+}
+
+/* For the header container */
+.header-container {
+  text-align: center; /* Ensures child elements center properly */
+  width: 100%;
+}
+
+/* If you need additional centering for the header element */
+header {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* ===== BUTTONS GRID ===== */
+.buttons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.pdf-button,
+.action-button {
+  --button-bg-opacity: var(--button-opacity);
+  
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  min-height: 120px;
+  border-radius: 16px;
+  color: var(--text-color);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.3s ease;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.2);
+  background: rgba(var(--primary-color-rgb), var(--button-bg-opacity));
+}
+
+.pdf-button::before,
+.action-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--primary-color);
+  opacity: var(--button-bg-opacity);
+  z-index: -1;
+  transition: opacity 0.3s ease;
+}
+
+.pdf-button:hover::before,
+.action-button:hover::before,
+.pdf-button:focus-visible::before,
+.action-button:focus-visible::before {
+  --button-bg-opacity: var(--button-hover-opacity);
+}
+
+.pdf-button:hover,
+.action-button:hover {
+  transform: translateY(-3px);
+}
+
+.pdf-button:focus-visible,
+.action-button:focus-visible {
+  outline: 2px solid var(--text-color);
+  outline-offset: 2px;
+}
+
+/* ===== LOADING & CANVAS ===== */
+.loading {
+  position: fixed;
+  inset: 0;
+  background: var(--primary-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  transition: opacity 0.3s ease;
+}
+
+#shaderCanvas,
+.fallback-bg {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+#shaderCanvas {
+  z-index: -1;
+  display: block;
+}
+
+.fallback-bg {
+  z-index: -2;
+  background: var(--primary-color);
+}
+
+/* ===== MESSAGES ===== */
+#messageDisplay {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(90%, 500px);
+  z-index: 100;
+}
+
+.message {
+  background: rgba(var(--primary-color-rgb), 0.8);
+  color: var(--text-color);
+  padding: 1rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  animation: fadeIn 0.3s ease-out forwards;
+  border: 1px solid rgba(var(--primary-color-rgb), 0.2);
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--text-color);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ===== MEDIA QUERIES ===== */
+@media (max-width: 768px) {
+  .content-container {
+    width: 85%;
+    padding: 1.5rem;
+  }
+  
+  body {
+    background-attachment: fixed;
+  }
+}
+
+@media (max-width: 480px) {
+  .content-container {
+    width: 95%;
+    padding: 1rem;
+  }
+  
+  .main-content {
+    padding: 1.5rem;
+    background: rgba(var(--primary-color-rgb), 0.15);
+  }
+  
+  .pdf-button,
+  .action-button {
+    min-height: 100px;
+    padding: 1.2rem;
+    background: rgba(var(--primary-color-rgb), 0.8);
+  }
+}
+
+@supports (padding-top: env(safe-area-inset-top)) {
+  body {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .content-container {
+    padding-top: calc(1.5rem + env(safe-area-inset-top));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .spinner {
+    animation: none;
+    border-top-color: transparent;
+  }
+}
