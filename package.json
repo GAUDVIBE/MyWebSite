@@ -1,0 +1,23 @@
+{
+  "name": "gaudry-portfolio",
+  "version": "1.0.0",
+  "description": "Portfolio website with WebGL and dynamic colors",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "dotenv": "^16.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  },
+  "engines": {
+    "node": "18.x",
+    "npm": "9.x"
+  }
+}
+
+
