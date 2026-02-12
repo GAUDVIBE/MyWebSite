@@ -1,19 +1,30 @@
+// ============ SHADER.JS - DEBUG VERSION ============
+console.log('🔥🔥🔥 SHADER.JS IS LOADED! 🔥🔥🔥');
+console.log('Timestamp:', new Date().toISOString());
+
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('✅ DOMContentLoaded fired');
+    
     const loading = document.querySelector('.loading');
     const canvas = document.getElementById('shaderCanvas');
     
+    console.log('🔍 Canvas element:', canvas);
+    
     if (!canvas) {
-        console.error('Canvas not found');
+        console.error('❌ Canvas not found!');
         if (loading) loading.remove();
+        
+        // Create a fallback colored background
+        document.body.style.background = 'linear-gradient(45deg, #3498db, #9b59b6)';
         return;
     }
     
     const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    console.log('🔍 WebGL context:', gl ? '✅ Created' : '❌ Failed');
     
     if (!gl) {
-        console.warn('WebGL not supported');
-        document.body.style.background = getComputedStyle(document.documentElement)
-            .getPropertyValue('--primary-color') || '#3498db';
+        console.warn('❌ WebGL not supported');
+        document.body.style.background = 'linear-gradient(45deg, #e74c3c, #f39c12)';
         if (loading) loading.remove();
         return;
     }
@@ -21,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Get colors from CSS
     const primaryColor = getComputedStyle(document.documentElement)
         .getPropertyValue('--primary-color').trim() || '#3498db';
+    console.log('🎨 Primary color:', primaryColor);
     
     // Convert hex to RGB
     const hexToRgb = (hex) => {
@@ -31,6 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     
     const rgb = hexToRgb(primaryColor);
+    console.log('🎨 RGB values:', rgb);
 
     // Vertex shader
     const vsSource = `
@@ -40,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     `;
 
-    // Fragment shader with animated background
+    // Fragment shader with VERY VISIBLE animation
     const fsSource = `
         precision highp float;
         uniform vec2 uResolution;
@@ -49,20 +62,16 @@ document.addEventListener('DOMContentLoaded', function() {
         void main() {
             vec2 uv = gl_FragCoord.xy / uResolution.xy;
             
-            // Animated waves
-            float wave1 = sin(uv.x * 10.0 + uTime) * 0.1;
-            float wave2 = cos(uv.y * 8.0 + uTime * 0.8) * 0.1;
-            float wave3 = sin((uv.x + uv.y) * 12.0 + uTime * 0.5) * 0.1;
+            // VERY VISIBLE animation - bright colors!
+            float r = sin(uv.x * 10.0 + uTime) * 0.5 + 0.5;
+            float g = cos(uv.y * 8.0 + uTime * 0.7) * 0.5 + 0.5;
+            float b = sin((uv.x + uv.y) * 12.0 + uTime * 0.5) * 0.5 + 0.5;
             
-            // Colors based on your theme
-            vec3 color1 = vec3(${rgb.r}, ${rgb.g}, ${rgb.b});
-            vec3 color2 = vec3(${rgb.r * 0.7}, ${rgb.g * 0.7}, ${rgb.b * 0.7});
-            vec3 color3 = vec3(${rgb.r * 0.4}, ${rgb.g * 0.4}, ${rgb.b * 0.4});
+            // Use theme color with high visibility
+            vec3 theme = vec3(${rgb.r}, ${rgb.g}, ${rgb.b});
             
-            // Mix colors based on position and waves
-            vec3 final = mix(color1, color2, uv.x + wave1);
-            final = mix(final, color3, uv.y + wave2);
-            final += wave3 * 0.2;
+            // Mix theme with bright colors
+            vec3 final = mix(theme, vec3(r, g, b), 0.7);
             
             gl_FragColor = vec4(final, 1.0);
         }
@@ -70,15 +79,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Compile shaders
     function createShader(gl, source, type) {
+        console.log('🔧 Compiling shader...');
         const shader = gl.createShader(type);
         gl.shaderSource(shader, source);
         gl.compileShader(shader);
         
         if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-            console.error('Shader compile error:', gl.getShaderInfoLog(shader));
-            gl.deleteShader(shader);
+            console.error('❌ Shader compile error:', gl.getShaderInfoLog(shader));
             return null;
         }
+        console.log('✅ Shader compiled successfully');
         return shader;
     }
 
@@ -86,6 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const fragmentShader = createShader(gl, fsSource, gl.FRAGMENT_SHADER);
     
     if (!vertexShader || !fragmentShader) {
+        console.error('❌ Failed to compile shaders');
         if (loading) loading.remove();
         return;
     }
@@ -97,11 +108,12 @@ document.addEventListener('DOMContentLoaded', function() {
     gl.linkProgram(program);
     
     if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-        console.error('Program link error');
+        console.error('❌ Program link error');
         if (loading) loading.remove();
         return;
     }
     
+    console.log('✅ Program linked successfully');
     gl.useProgram(program);
 
     // Set up geometry
@@ -130,6 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
         canvas.height = window.innerHeight;
         gl.viewport(0, 0, canvas.width, canvas.height);
         gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+        console.log('📐 Canvas resized:', canvas.width, 'x', canvas.height);
     }
 
     window.addEventListener('resize', resizeCanvas);
@@ -137,12 +150,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Animation
     let startTime = Date.now();
+    let frameCount = 0;
     
     function animate() {
-        const time = (Date.now() - startTime) * 0.001; // seconds
+        const time = (Date.now() - startTime) * 0.001;
         gl.uniform1f(timeLocation, time);
-        
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        
+        frameCount++;
+        if (frameCount % 60 === 0) {
+            console.log('🎬 Animation frame', frameCount, 'time:', time.toFixed(2));
+        }
         
         requestAnimationFrame(animate);
     }
@@ -155,5 +173,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 500);
     }
 
+    console.log('🚀 Starting animation...');
     animate();
+    console.log('✅ Shader initialization complete!');
 });
+
+console.log('📦 shader.js execution finished');
